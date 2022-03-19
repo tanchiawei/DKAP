@@ -10,7 +10,7 @@ from prompt_toolkit import PromptSession  # pip install prompt_toolkit
 # for housekeeping, separate functions into different files when complete
 from DKAPinit import initCheck
 
-
+###  after complete, separate these two into a DKAPself.py
 def genKeyPair():
     try:
         cmd = "ssh-keygen -f " + os.environ["USERPROFILE"] + "\\.ssh\\DKAP\\SELF -t ecdsa -b 521 -C \"WalletAddress\"" ### replace SELF and WALLETADDRESS with wallet address, unique identifier for self
@@ -26,17 +26,17 @@ def delKeyPair():
     subprocess.run(cmd, shell=True, check=True)  # del privkey from ssh-agent
     ### FUNCTION TO DELETE SELF.PUBKEY FROM BLOCKCHAIN HERE ###
 
-
-def listKeys():  # display pubkeys in authorized_keys folder that are managed by DKAP. tracked in register.txt
-    pass
-
-
-def addPubKey():  # should take an argument for the pubkey to add, data comes from blockchain
+###  after complete, separate these two into a DKAPpeers.py
+def addPubKey(pubkey):  # should take an argument for the pubkey to add, data comes from blockchain
     pass  # after adding, should add line to register.txt if does not exist
 
 
-def rmPubKey():  # should take an argument for the pubkey to remove, data comes from blockchain
+def rmPubKey(pubkey):  # should take an argument for the pubkey to remove, data comes from blockchain
     pass  # after removing, delete line from register.txt
+
+
+def listKeys():  # display pubkeys in authorized_keys folder that are managed by DKAP. tracked in register.txt
+    pass
 
 
 def listenplaceholder():
@@ -46,8 +46,10 @@ def listenplaceholder():
         #  time.sleep(3)
     ### FUNCTION TO LISTEN FOR BLOCKCHAIN EVENTS HERE ###
     ### based on event received:
-    ### addPrivKey()  #  adding and removing pubKeys from authorized_keys folder
-    ### rmPrivKey()
+    # print ("adding public key:", pubkey.name)
+    ### addPrivKey(pubkey)  #  adding and removing pubKeys from authorized_keys folder
+    # print ("removing public key:", pubkey.name)
+    ### rmPrivKey(pubkey)
 
 
 def main():
