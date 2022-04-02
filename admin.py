@@ -22,50 +22,63 @@ class ssh_admin:
     def add_permitted_address(self, in_permitted):
         node_file = open('admin.txt', 'r')
         node_lines = node_file.readlines()
+        if len(in_permitted) < 42:
+            print("You enter incorrect address format")
+            return
         if len(node_lines) <2:
             print("You are not authorized admin")
             return
-        self.main_account = node_lines[0].strip()
-        self.private_key = node_lines[1].strip()
-        self.permitted_address = self.web3.toChecksumAddress(in_permitted)
-        self.tx = self.contract.functions.adminSetPermittedAddresses(self.permitted_address).buildTransaction({
-            'from': self.main_account,  # Only 'from' address, don't insert 'to' address
-            'value': 0,  # Add how many ethers you'll transfer during the deploy
-            'gas': 2000000,  # Trying to make it dynamic ..
-            'gasPrice': (5000000000+self.web3.eth.gasPrice),  # Get Gas Price
-            'nonce': self.web3.eth.getTransactionCount(self.main_account)
-        })
+        try:
+            self.main_account = node_lines[0].strip()
+            self.private_key = node_lines[1].strip()
+            self.permitted_address = self.web3.toChecksumAddress(in_permitted)
+            self.tx = self.contract.functions.adminSetPermittedAddresses(self.permitted_address).buildTransaction({
+                'from': self.main_account,  # Only 'from' address, don't insert 'to' address
+                'value': 0,  # Add how many ethers you'll transfer during the deploy
+                'gas': 2000000,  # Trying to make it dynamic ..
+                'gasPrice': (5000000000+self.web3.eth.gasPrice),  # Get Gas Price
+                'nonce': self.web3.eth.getTransactionCount(self.main_account)
+            })
 
-        self.signed = self.web3.eth.account.signTransaction(self.tx, self.private_key)
+            self.signed = self.web3.eth.account.signTransaction(self.tx, self.private_key)
 
-        self.tx_hash = self.web3.eth.sendRawTransaction(self.signed.rawTransaction)
+            self.tx_hash = self.web3.eth.sendRawTransaction(self.signed.rawTransaction)
 
-        self.web3.eth.wait_for_transaction_receipt(self.tx_hash)
-        print(self.tx_hash)
-        print('updated noob')
+            self.web3.eth.wait_for_transaction_receipt(self.tx_hash)
+            print(self.tx_hash)
+            print('updated noob')
+        except:
+            print('Fail noob')
+
 
     def remove_permitted_address(self, in_permitted):
         node_file = open('admin.txt', 'r')
         node_lines = node_file.readlines()
+        if len(in_permitted) < 42:
+            print("You enter incorrect address format")
+            return
         if len(node_lines) <2:
             print("You are not authorized admin")
             return
-        self.main_account = node_lines[0].strip()
-        self.private_key = node_lines[1].strip()
-        self.permitted_address = self.web3.toChecksumAddress(in_permitted)
-        self.tx = self.contract.functions.adminRemovePermittedAdress(self.permitted_address).buildTransaction({
-            'from': self.main_account,  # Only 'from' address, don't insert 'to' address
-            'value': 0,  # Add how many ethers you'll transfer during the deploy
-            'gas': 2000000,  # Trying to make it dynamic ..
-            'gasPrice': (5000000000 + self.web3.eth.gasPrice),  # Get Gas Price
-            'nonce': self.web3.eth.getTransactionCount(self.main_account)
-        })
+        try:
+            self.main_account = node_lines[0].strip()
+            self.private_key = node_lines[1].strip()
+            self.permitted_address = self.web3.toChecksumAddress(in_permitted)
+            self.tx = self.contract.functions.adminRemovePermittedAdress(self.permitted_address).buildTransaction({
+                'from': self.main_account,  # Only 'from' address, don't insert 'to' address
+                'value': 0,  # Add how many ethers you'll transfer during the deploy
+                'gas': 2000000,  # Trying to make it dynamic ..
+                'gasPrice': (5000000000 + self.web3.eth.gasPrice),  # Get Gas Price
+                'nonce': self.web3.eth.getTransactionCount(self.main_account)
+            })
 
-        self.signed = self.web3.eth.account.signTransaction(self.tx, self.private_key)
+            self.signed = self.web3.eth.account.signTransaction(self.tx, self.private_key)
 
-        self.tx_hash = self.web3.eth.sendRawTransaction(self.signed.rawTransaction)
+            self.tx_hash = self.web3.eth.sendRawTransaction(self.signed.rawTransaction)
 
-        self.web3.eth.wait_for_transaction_receipt(self.tx_hash)
-        print(self.tx_hash)
-        print('updated noob')
+            self.web3.eth.wait_for_transaction_receipt(self.tx_hash)
+            print(self.tx_hash)
+            print('updated noob')
+        except:
+            print('Failed')
 

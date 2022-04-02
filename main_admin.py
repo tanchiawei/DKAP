@@ -31,9 +31,9 @@ def main():
             print("Help dialogue.")
         elif input == "exit":
             sys.exit(0)
-        elif input == "addnode":
+        elif input.split()[0] == "addnode":
             ssh_admin.add_permitted_address(input.split()[1])
-        elif input == "removenode":
+        elif input.split()[0] == "removenode":
             ssh_admin.remove_permitted_address(input.split()[1])
         else:
             print("Unrecognised command. Type \'help\' for available commands. Press up for previous commands.")
