@@ -1,4 +1,3 @@
-
 import os
 import sys
 import time  # for listener
@@ -6,50 +5,11 @@ import platform
 import threading
 import subprocess
 from prompt_toolkit import PromptSession  # pip install prompt_toolkit
-
+from node import ssh_node
+from admin import ssh_admin
+from peer import ssh_peer
 # for housekeeping, separate functions into different files when complete
 from DKAPinit import initCheck
-
-###  after complete, separate these two into a DKAPself.py
-def genKeyPair():
-    try:
-        cmd = "ssh-keygen -f " + os.environ["USERPROFILE"] + "\\.ssh\\DKAP\\SELF -t ecdsa -b 521 -C \"WalletAddress\"" ### replace SELF and WALLETADDRESS with wallet address, unique identifier for self
-        subprocess.run(cmd, shell=True, check=True)
-        cmd = "ssh-add " + os.environ["USERPROFILE"] + "\\.ssh\\DKAP\\SELF"  ### replace SELF and WALLETADDRESS with wallet address, unique identifier for self
-        subprocess.run(cmd, shell=True, check=True)  # add privkey to ssh-agent
-        ### FUNCTION TO COMMIT SELF.PUBKEY TO BLOCKCHAIN HERE ###
-    except subprocess.CalledProcessError:
-        print("Key generation failed.")
-
-def delKeyPair():
-    cmd = "ssh-add -d " + os.environ["USERPROFILE"] + "\\.ssh\\DKAP\\SELF"  ### replace SELF and WALLETADDRESS with wallet address, unique identifier for self
-    subprocess.run(cmd, shell=True, check=True)  # del privkey from ssh-agent
-    ### FUNCTION TO DELETE SELF.PUBKEY FROM BLOCKCHAIN HERE ###
-
-###  after complete, separate these two into a DKAPpeers.py
-def addPubKey(pubkey):  # should take an argument for the pubkey to add, data comes from blockchain
-    pass  # after adding, should add line to register.txt if does not exist
-
-
-def rmPubKey(pubkey):  # should take an argument for the pubkey to remove, data comes from blockchain
-    pass  # after removing, delete line from register.txt
-
-
-def listKeys():  # display pubkeys in authorized_keys folder that are managed by DKAP. tracked in register.txt
-    pass
-
-
-def listenplaceholder():
-    pass
-    #  while True:
-        #  print("Listening..")  # should be listening silently
-        #  time.sleep(3)
-    ### FUNCTION TO LISTEN FOR BLOCKCHAIN EVENTS HERE ###
-    ### based on event received:
-    # print ("adding public key:", pubkey.name)
-    ### addPrivKey(pubkey)  #  adding and removing pubKeys from authorized_keys folder
-    # print ("removing public key:", pubkey.name)
-    ### rmPrivKey(pubkey)
 
 
 def main():
@@ -60,7 +20,8 @@ def main():
 
     initCheck()  # check that folders and files required are present
 
-    listenthread = threading.Thread(target=listenplaceholder, daemon=True)  # args= for arguments to pass, daemon= to kill thread when main ends
+    listenthread = threading.Thread(target=ssh_peer.listen,
+                                    daemon=True)  # args= for arguments to pass, daemon= to kill thread when main ends
     listenthread.start()  # while kms is running, listen for blockchain changes
 
     while True:
@@ -73,19 +34,23 @@ def main():
             sys.exit(0)
         elif input == "list":
             print("List keys. Own private key and other installed public keys here. Refer to register.txt")
-            listKeys()
+            ssh_peer.read_public_key()
         elif input == "gen":
-            print("Generating keypair for this machine. Save private key (ssh-add), commit public key to blockchain. Maybe on first run only.")
-            genKeyPair()
+            print(
+                "Generating keypair for this machine. Save private key (ssh-add), commit public key to blockchain. Maybe on first run only.")
+            ssh_node.genKeyPair()
         elif input == "del":
-            print("Delete keypair for this machine. Delete private key (ssh-add -d), commit public key deletion to blockchain.")
-            delKeyPair()
+            print(
+                "Delete keypair for this machine. Delete private key (ssh-add -d), commit public key deletion to blockchain.")
+            ssh_node.delKeyPair()
         else:
             print("Unrecognised command. Type \'help\' for available commands. Press up for previous commands.")
 
 
 if __name__ == "__main__":
-
+    ssh_peer = ssh_peer()
+    ssh_node = ssh_node()
+    ssh_admin = ssh_admin()
     if platform.system() != "Windows":
         print("DKAP runs on Windows systems only, for now. This application will now exit.")
         sys.exit(1)

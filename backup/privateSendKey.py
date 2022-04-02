@@ -27,6 +27,6 @@ web3.eth.wait_for_transaction_receipt(tx_hash)'''
 
 #Demo account #2 use get method
 incomingPubValue = contract.functions.getPubKeyHalf1().call()
-f = open("demoPub.pub", "w")
+f = open("../demoPub.pub", "w")
 f.write(incomingPubValue)
 f.close()
