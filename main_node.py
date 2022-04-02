@@ -20,9 +20,9 @@ def main():
 
     initCheck()  # check that folders and files required are present
 
-    listenthread = threading.Thread(target=ssh_peer.listen,
-                                    daemon=True)  # args= for arguments to pass, daemon= to kill thread when main ends
-    listenthread.start()  # while kms is running, listen for blockchain changes
+    #listenthread = threading.Thread(target=ssh_peer.listen,
+                                    #daemon=True)  # args= for arguments to pass, daemon= to kill thread when main ends
+    #listenthread.start()  # while kms is running, listen for blockchain changes
 
     while True:
         print("> ", end="")
@@ -32,9 +32,6 @@ def main():
             print("Help dialogue.")
         elif input == "exit":
             sys.exit(0)
-        elif input == "list":
-            print("List keys. Own private key and other installed public keys here. Refer to register.txt")
-            ssh_peer.read_public_key()
         elif input == "gen":
             print(
                 "Generating keypair for this machine. Save private key (ssh-add), commit public key to blockchain. Maybe on first run only.")
@@ -43,18 +40,12 @@ def main():
             print(
                 "Delete keypair for this machine. Delete private key (ssh-add -d), commit public key deletion to blockchain.")
             ssh_node.delKeyPair()
-        elif input == "addnode":
-            ssh_admin.add_permitted_address("0x2592175D63aeAfC7ADDE6014Fd1A881B16e17A9e")
-        elif input == "removenode":
-            ssh_admin.remove_permitted_address("0x2592175D63aeAfC7ADDE6014Fd1A881B16e17A9e")
         else:
             print("Unrecognised command. Type \'help\' for available commands. Press up for previous commands.")
 
 
 if __name__ == "__main__":
-    ssh_peer = ssh_peer()
     ssh_node = ssh_node()
-    ssh_admin = ssh_admin()
     if platform.system() != "Windows":
         print("DKAP runs on Windows systems only, for now. This application will now exit.")
         sys.exit(1)

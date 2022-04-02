@@ -10,8 +10,7 @@ class ssh_admin:
         #infura_url = 'https://eth-ropsten.alchemyapi.io/v2/Kc77KmAsZu_ctaAJ_xUxBHmNMonYZdEN'  # your uri
         #infura_url = 'https://ropsten.infura.io/v3/2fff4910776f44fabc07743eac1186e3'  # your uri
         self.web3 = Web3(Web3.HTTPProvider(infura_url))
-        self.main_account = "0x9e659CF30F66956E2Dedf4027b81e39Ff1F0a7a9"
-        self.private_key = "a0750e6eaa34fde61a642d208ec2f7ade2519047bf0b57f0d4f598da9f222dc1"
+
         # Smart contract ABI and address it was deployed
 
         self.abi = json.loads(
@@ -21,6 +20,13 @@ class ssh_admin:
         self.contract = self.web3.eth.contract(address=self.address, abi=self.abi)
 
     def add_permitted_address(self, in_permitted):
+        node_file = open('admin.txt', 'r')
+        node_lines = node_file.readlines()
+        if len(node_lines) <2:
+            print("You are not authorized admin")
+            return
+        self.main_account = node_lines[0].strip()
+        self.private_key = node_lines[1].strip()
         self.permitted_address = self.web3.toChecksumAddress(in_permitted)
         self.tx = self.contract.functions.adminSetPermittedAddresses(self.permitted_address).buildTransaction({
             'from': self.main_account,  # Only 'from' address, don't insert 'to' address
@@ -39,6 +45,13 @@ class ssh_admin:
         print('updated noob')
 
     def remove_permitted_address(self, in_permitted):
+        node_file = open('admin.txt', 'r')
+        node_lines = node_file.readlines()
+        if len(node_lines) <2:
+            print("You are not authorized admin")
+            return
+        self.main_account = node_lines[0].strip()
+        self.private_key = node_lines[1].strip()
         self.permitted_address = self.web3.toChecksumAddress(in_permitted)
         self.tx = self.contract.functions.adminRemovePermittedAdress(self.permitted_address).buildTransaction({
             'from': self.main_account,  # Only 'from' address, don't insert 'to' address
@@ -56,6 +69,3 @@ class ssh_admin:
         print(self.tx_hash)
         print('updated noob')
 
-
-    def destory_contract(self):
-        self.contract.functions.destroy().call()
