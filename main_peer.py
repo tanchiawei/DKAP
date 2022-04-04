@@ -29,6 +29,7 @@ def main():
         print(input[:-1])
         if input == "help":
             print("Help dialogue.")
+            print("list - List keys. Own private key and other installed public keys here. Refer to register.txt")
         elif input == "exit":
             sys.exit(0)
         elif input == "list":

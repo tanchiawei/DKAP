@@ -28,7 +28,7 @@ class ssh_peer:
         # Smart contract ABI and address it was deployed
         self.abi = json.loads(
             '[{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"STATUS","type":"string"},{"indexed":false,"internalType":"bytes","name":"ADDRESS","type":"bytes"}],"name":"PairError","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"STATUS","type":"string"}],"name":"PairEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"test","type":"address"},{"indexed":false,"internalType":"address","name":"test2","type":"address"}],"name":"VoteCast","type":"event"},{"inputs":[],"name":"adminGetPermittedAddresses","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"inRemoveAddress","type":"address"}],"name":"adminRemovePermittedAdress","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"inPermittedAddress","type":"address"}],"name":"adminSetPermittedAddresses","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"delete_public_key","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"destroy","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"getPubKey","outputs":[{"components":[{"internalType":"address","name":"permittedAddress","type":"address"},{"internalType":"string","name":"pubValue","type":"string"},{"internalType":"bool","name":"flag","type":"bool"}],"internalType":"struct PubKey.pubKey[]","name":"","type":"tuple[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"inPubKey","type":"string"}],"name":"setPubKey","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"nonpayable","type":"function"}]')
-        self.address = self.web3.toChecksumAddress("0xaB9ad72f9AaCb0AF36751468fA168c3cDe3C7FDB")
+        self.address = self.web3.toChecksumAddress("0x46b45f9622b4be0dE27d974E36862748bF317C4C")
         # self.address = self.web3.toChecksumAddress("0xE175bC1A687a8490B15381235011BB77981DC1C4")
 
         self.contract = self.web3.eth.contract(address=self.address, abi=self.abi)
@@ -59,6 +59,8 @@ class ssh_peer:
                     if each_public_key[0] not in self.alive_address:
                         self.alive_address.insert(len(self.alive_address), each_public_key[0])
                         self.add_public_key(each_public_key[0], each_public_key[1])
+                    else:
+                        self.add_public_key(each_public_key[0], each_public_key[1])
                 else:
                     if each_public_key[0] in self.alive_address:
                         self.alive_address.remove(each_public_key[0])
@@ -74,13 +76,13 @@ class ssh_peer:
         f.close()
 
     def add_public_key(self, in_address, in_public_key):
-        os.path.abspath(os.environ["USERPROFILE"] + "\\.ssh\\DKAP\\" + in_address)
-        f = open("" + os.path.abspath(os.environ["USERPROFILE"] + "\\.ssh\\DKAP\\" + in_address) + ".pub", "w")
+        #os.path.abspath(os.environ["USERPROFILE"] + "\\.ssh\\DKAP\\" + in_address)
+        f = open("" + os.path.abspath(os.environ["USERPROFILE"] + "\\.ssh\\authorized_keys\\" + in_address) + ".pub", "w")
         f.write(in_public_key)
         f.close()
 
     def delete_public_key(self, in_address):
-        os.remove(os.environ["USERPROFILE"] + "\\.ssh\\DKAP\\" + in_address + ".pub")
+        os.remove(os.environ["USERPROFILE"] + "\\.ssh\\authorized_keys\\" + in_address + ".pub")
 
     def listen(self):
         event_filter = self.contract.events.PairEvent.createFilter(fromBlock='latest')

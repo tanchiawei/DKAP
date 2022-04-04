@@ -23,7 +23,7 @@ print("Current Balance " + str(balance / (10**18) ))
 #Smart contract ABI and address it was deployed
 abi = json.loads(
     '[{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"STATUS","type":"string"},{"indexed":false,"internalType":"bytes","name":"ADDRESS","type":"bytes"}],"name":"PairError","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"STATUS","type":"string"}],"name":"PairEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"test","type":"address"},{"indexed":false,"internalType":"address","name":"test2","type":"address"}],"name":"VoteCast","type":"event"},{"inputs":[],"name":"adminGetPermittedAddresses","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"inRemoveAddress","type":"address"}],"name":"adminRemovePermittedAdress","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"inPermittedAddress","type":"address"}],"name":"adminSetPermittedAddresses","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"delete_public_key","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"destroy","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"getPubKey","outputs":[{"components":[{"internalType":"address","name":"permittedAddress","type":"address"},{"internalType":"string","name":"pubValue","type":"string"},{"internalType":"bool","name":"flag","type":"bool"}],"internalType":"struct PubKey.pubKey[]","name":"","type":"tuple[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"inPubKey","type":"string"}],"name":"setPubKey","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"nonpayable","type":"function"}]')
-address = web3.toChecksumAddress("0xaB9ad72f9AaCb0AF36751468fA168c3cDe3C7FDB")
+address = web3.toChecksumAddress("0x46b45f9622b4be0dE27d974E36862748bF317C4C")
 
 #test = web3.eth.account("0x9e659CF30F66956E2Dedf4027b81e39Ff1F0a7a9")
 #Est contract
@@ -31,7 +31,7 @@ address = web3.toChecksumAddress("0xaB9ad72f9AaCb0AF36751468fA168c3cDe3C7FDB")
 contract = web3.eth.contract(address=address,abi=abi)
 
 #Admin add PermittedAddress
-
+'''
 PermittedAddress= web3.toChecksumAddress(mainAccount)
 tx = contract.functions.adminSetPermittedAddresses(PermittedAddress).buildTransaction({
     'from': mainAccount,  # Only 'from' address, don't insert 'to' address
@@ -47,7 +47,7 @@ tx_hash = web3.eth.sendRawTransaction(signed.rawTransaction)
 print(tx_hash)
 web3.eth.wait_for_transaction_receipt(tx_hash)
 print('updated noob')
-
+'''
 
 
 '''

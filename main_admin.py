@@ -20,31 +20,57 @@ def main():
 
     initCheck()  # check that folders and files required are present
 
-    #listenthread = threading.Thread(target=ssh_peer.listen,
-                                    #daemon=True)  # args= for arguments to pass, daemon= to kill thread when main ends
-    #listenthread.start()  # while kms is running, listen for blockchain changes
+    # listenthread = threading.Thread(target=ssh_peer.listen,
+    # daemon=True)  # args= for arguments to pass, daemon= to kill thread when main ends
+    # listenthread.start()  # while kms is running, listen for blockchain changes
 
     while True:
         print("> ", end="")
         input = session.prompt()
         if input == "help":
             print("Help dialogue.")
+            print("gen - Generating keypair for this machine. Save private key (ssh-add), commit public key to blockchain.")
+            print("del - Delete keypair for this machine. Delete private key (ssh-add -d), commit public key deletion to blockchain.")
+            print("addnode <wallet address> - Permitting node for the input address.")
+            print("del <wallet address> - Deleting node for the input address.")
         elif input == "exit":
             sys.exit(0)
-        elif input.split()[0] == "addnode":
-            ssh_admin.add_permitted_address(input.split()[1])
-        elif input.split()[0] == "removenode":
-            ssh_admin.remove_permitted_address(input.split()[1])
+        elif input == "gen":
+            print(
+                "Generating keypair for this machine. Save private key (ssh-add), commit public key to blockchain. Maybe on first run only.")
+            ssh_node.genKeyPair()
+        elif input == "del":
+            print(
+                "Delete keypair for this machine. Delete private key (ssh-add -d), commit public key deletion to blockchain.")
+            ssh_node.delKeyPair()
+        elif len(input.split(" ")) == 2:
+            if input.split()[0] == "addnode":
+                ssh_admin.add_permitted_address(input.split()[1])
+                print("Permitting node for the input address.")
+            elif input.split()[0] == "removenode":
+                ssh_admin.remove_permitted_address(input.split()[1])
+                print("Deleting node for the input address.")
         else:
             print("Unrecognised command. Type \'help\' for available commands. Press up for previous commands.")
 
 
 if __name__ == "__main__":
-    ssh_peer = ssh_peer()
-    ssh_node = ssh_node()
-    ssh_admin = ssh_admin()
-    if platform.system() != "Windows":
-        print("DKAP runs on Windows systems only, for now. This application will now exit.")
-        sys.exit(1)
+    file_exists = os.path.isfile(".\\admin.txt")
+    if file_exists:
+        node_file = open('admin.txt', 'r')
+        node_lines = node_file.readlines()
+        if len(node_lines) < 2:
+            print("You are not authorized admin")
+        else:
+            main_account = node_lines[0].strip()
+            private_key = node_lines[1].strip()
+            ssh_peer = ssh_peer()
+            ssh_node = ssh_node(main_account,private_key)
+            ssh_admin = ssh_admin(main_account,private_key)
+            if platform.system() != "Windows":
+                print("DKAP runs on Windows systems only, for now. This application will now exit.")
+                sys.exit(1)
 
-    main()
+        main()
+    else:
+        print("Please configure your admin.txt")
