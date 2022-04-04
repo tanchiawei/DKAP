@@ -11,3 +11,5 @@ The KMS on all participating devices must be able to continue to function if any
 There must also be one or more appointed wardens to take executive action if warranted (e.g., a new device is added and must be listed as a peer, or a device is stolen, and all the keys assigned to that device must be purged from the canonical blockchain). 
 
 
+# Pre-requisite
+python => 3.8 
