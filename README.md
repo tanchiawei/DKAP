@@ -13,3 +13,4 @@ There must also be one or more appointed wardens to take executive action if war
 
 # Pre-requisite
 python => 3.8 
+pip
