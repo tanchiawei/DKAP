@@ -26,7 +26,6 @@ class ssh_node:
 
     def add_public_value(self, in_public_file):
         try:
-            # Demo account #2 read and save into the contract using the set method
             pub_file = open(in_public_file, "r")
             pub_key = pub_file.read()
             tx = self.contract.functions.setPubKey(pub_key).buildTransaction({
