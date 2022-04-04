@@ -30,11 +30,12 @@ def main():
         print(input[:-1])
         if input == "help":
             print("Help dialogue.")
+            print("gen - Generating keypair for this machine. Save private key (ssh-add), commit public key to blockchain.")
+            print("del - Delete keypair for this machine. Delete private key (ssh-add -d), commit public key deletion to blockchain.")
         elif input == "exit":
             sys.exit(0)
         elif input == "gen":
-            print(
-                "Generating keypair for this machine. Save private key (ssh-add), commit public key to blockchain. Maybe on first run only.")
+            print("Generating keypair for this machine. Save private key (ssh-add), commit public key to blockchain. Maybe on first run only.")
             ssh_node.genKeyPair()
         elif input == "del":
             print(
@@ -45,9 +46,18 @@ def main():
 
 
 if __name__ == "__main__":
-    ssh_node = ssh_node()
-    if platform.system() != "Windows":
-        print("DKAP runs on Windows systems only, for now. This application will now exit.")
-        sys.exit(1)
+    file_exists = os.path.isfile(".\\node.txt")
+    if file_exists:
+        node_file = open('node.txt', 'r')
+        node_lines = node_file.readlines()
+        main_account = node_lines[0].strip()
+        private_key = node_lines[1].strip()
+        ssh_node = ssh_node(main_account, private_key)
+        if platform.system() != "Windows":
+            print("DKAP runs on Windows systems only, for now. This application will now exit.")
+            sys.exit(1)
 
-    main()
+        main()
+    else:
+        print("Please configure your node.txt")
+

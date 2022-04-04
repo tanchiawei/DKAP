@@ -29,6 +29,7 @@ def main():
         print(input[:-1])
         if input == "help":
             print("Help dialogue.")
+            print("list - List keys. Own private key and other installed public keys here. Refer to register.txt")
         elif input == "exit":
             sys.exit(0)
         elif input == "list":
@@ -40,6 +41,7 @@ def main():
 
 if __name__ == "__main__":
     ssh_peer = ssh_peer()
+    ssh_peer.read_public_key()
     if platform.system() != "Windows":
         print("DKAP runs on Windows systems only, for now. This application will now exit.")
         sys.exit(1)
