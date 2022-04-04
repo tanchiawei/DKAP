@@ -41,6 +41,7 @@ def main():
 
 if __name__ == "__main__":
     ssh_peer = ssh_peer()
+    ssh_peer.read_public_key()
     if platform.system() != "Windows":
         print("DKAP runs on Windows systems only, for now. This application will now exit.")
         sys.exit(1)

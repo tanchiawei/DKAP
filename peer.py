@@ -14,7 +14,6 @@ class ssh_peer:
         if file_exists:
             register_file = open(os.path.abspath(os.environ["USERPROFILE"] + "\\.ssh\\DKAP\\register.txt"), 'r')
             self.alive_address = register_file.read().splitlines()
-            # self.alive_address = register_file.readlines()
         else:
             open(os.path.abspath(os.environ["USERPROFILE"] + "\\.ssh\\DKAP\\register.txt"), 'w+')
         print(self.alive_address)
@@ -43,8 +42,7 @@ class ssh_peer:
     def read_public_key(self):
         try:
             chain_current_list = 0
-            chain_mismatch = False
-            print(self.alive_address)
+
             incomingPubValue = self.contract.functions.getPubKey().call()
             valid_public_address = []
             for each_public_key in incomingPubValue:
@@ -72,6 +70,8 @@ class ssh_peer:
                 alive_address = "\n".join(self.alive_address)
                 f.write(alive_address)
             f.close()
+            print('Updated Public Key')
+            print(self.alive_address)
         except:
             print('Issued occurred during reading of block chain.')
 
