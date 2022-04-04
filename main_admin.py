@@ -45,11 +45,12 @@ def main():
             ssh_node.delKeyPair()
         elif len(input.split(" ")) == 2:
             if input.split()[0] == "addnode":
-                ssh_admin.add_permitted_address(input.split()[1])
                 print("Permitting node for the input address.")
+                ssh_admin.add_permitted_address(input.split()[1])
             elif input.split()[0] == "removenode":
-                ssh_admin.remove_permitted_address(input.split()[1])
                 print("Deleting node for the input address.")
+                ssh_admin.remove_permitted_address(input.split()[1])
+
         else:
             print("Unrecognised command. Type \'help\' for available commands. Press up for previous commands.")
 
@@ -64,7 +65,7 @@ if __name__ == "__main__":
         else:
             main_account = node_lines[0].strip()
             private_key = node_lines[1].strip()
-            ssh_peer = ssh_peer()
+            #ssh_peer = ssh_peer()
             ssh_node = ssh_node(main_account,private_key)
             ssh_admin = ssh_admin(main_account,private_key)
             if platform.system() != "Windows":

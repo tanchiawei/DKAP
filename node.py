@@ -25,46 +25,53 @@ class ssh_node:
         self.contract = self.web3.eth.contract(address=self.address, abi=self.abi)
 
     def add_public_value(self, in_public_file):
-        # Demo account #2 read and save into the contract using the set method
-        pub_file = open(in_public_file, "r")
-        pub_key = pub_file.read()
-        tx = self.contract.functions.setPubKey(pub_key).buildTransaction({
-            'from': self.main_account,  # Only 'from' address, don't insert 'to' address
-            'value': 0,  # Add how many ethers you'll transfer during the deploy
-            'gas': 2000000,  # Trying to make it dynamic ..
-            'gasPrice': (5000000000 + self.web3.eth.gasPrice),  # Get Gas Price
-            'nonce': self.web3.eth.getTransactionCount(self.main_account)
-        })
+        try:
+            # Demo account #2 read and save into the contract using the set method
+            pub_file = open(in_public_file, "r")
+            pub_key = pub_file.read()
+            tx = self.contract.functions.setPubKey(pub_key).buildTransaction({
+                'from': self.main_account,  # Only 'from' address, don't insert 'to' address
+                'value': 0,  # Add how many ethers you'll transfer during the deploy
+                'gas': 2000000,  # Trying to make it dynamic ..
+                'gasPrice': (5000000000 + self.web3.eth.gasPrice),  # Get Gas Price
+                'nonce': self.web3.eth.getTransactionCount(self.main_account)
+            })
 
-        signed = self.web3.eth.account.signTransaction(tx, self.private_key)
+            signed = self.web3.eth.account.signTransaction(tx, self.private_key)
 
-        tx_hash = self.web3.eth.sendRawTransaction(signed.rawTransaction)
+            tx_hash = self.web3.eth.sendRawTransaction(signed.rawTransaction)
 
-        self.web3.eth.wait_for_transaction_receipt(tx_hash)
-        print(tx_hash)
-        time.sleep(4)
-        receipt = self.web3.eth.get_transaction_receipt(tx_hash)
-        decoded_logs = self.contract.events.PairEvent().processReceipt(receipt)
-        # Access details as simply as:
-        status = ''
-        for log in decoded_logs:
-            status = log.args.STATUS
-        if "Not Authorized" in status:
-            print("NOT AUTHORIZED")
+            self.web3.eth.wait_for_transaction_receipt(tx_hash)
+            time.sleep(4)
+            receipt = self.web3.eth.get_transaction_receipt(tx_hash)
+            decoded_logs = self.contract.events.PairEvent().processReceipt(receipt)
+            # Access details as simply as:
+            status = ''
+            for log in decoded_logs:
+                status = log.args.STATUS
+            if "Not Authorized" in status:
+                print("NOT AUTHORIZED")
+            else:
+                print('Successfully added public key.')
+        except:
+            print('Issued occurred during transacting to block chain.')
 
     def remove_public_value(self):
-        tx = self.contract.functions.delete_public_key().buildTransaction({
-            'from': self.main_account,  # Only 'from' address, don't insert 'to' address
-            'value': 0,  # Add how many ethers you'll transfer during the deploy
-            'gas': 2000000,  # Trying to make it dynamic ..
-            'gasPrice': (5000000000 + self.web3.eth.gasPrice),  # Get Gas Price
-            'nonce': self.web3.eth.getTransactionCount(self.main_account)
-        })
-        signed = self.web3.eth.account.signTransaction(tx, self.private_key)
+        try:
+            tx = self.contract.functions.delete_public_key().buildTransaction({
+                'from': self.main_account,  # Only 'from' address, don't insert 'to' address
+                'value': 0,  # Add how many ethers you'll transfer during the deploy
+                'gas': 2000000,  # Trying to make it dynamic ..
+                'gasPrice': (5000000000 + self.web3.eth.gasPrice),  # Get Gas Price
+                'nonce': self.web3.eth.getTransactionCount(self.main_account)
+            })
+            signed = self.web3.eth.account.signTransaction(tx, self.private_key)
 
-        tx_hash = self.web3.eth.sendRawTransaction(signed.rawTransaction)
-        self.web3.eth.wait_for_transaction_receipt(tx_hash)
-        print(tx_hash)
+            tx_hash = self.web3.eth.sendRawTransaction(signed.rawTransaction)
+            self.web3.eth.wait_for_transaction_receipt(tx_hash)
+            print('Successfully removed public key.')
+        except:
+            print('Issued occurred during transacting to block chain.')
 
     def genKeyPair(self):
         try:
@@ -77,17 +84,20 @@ class ssh_node:
             ### FUNCTION TO COMMIT SELF.PUBKEY TO BLOCKCHAIN HERE ###
             self.add_public_value(
                 os.environ["USERPROFILE"] + "\\.ssh\\DKAP\\" + self.main_account + ".pub")
+            print('Done generating')
 
         except subprocess.CalledProcessError:
             print("Key generation failed.")
 
     def delKeyPair(self):
-        cmd = "ssh-add -d \"" + os.environ[
-            "USERPROFILE"] + "\\.ssh\\DKAP\\" + self.main_account + "\""  ### replace SELF and WALLETADDRESS with wallet address, unique identifier for self
-        subprocess.run(cmd, shell=True, check=True)  # del privkey from ssh-agent
-        os.remove(os.environ["USERPROFILE"] + "\\.ssh\\DKAP\\" + self.main_account)
-        os.remove(os.environ["USERPROFILE"] + "\\.ssh\\DKAP\\" + self.main_account + ".pub")
-        ### FUNCTION TO DELETE SELF.PUBKEY FROM BLOCKCHAIN HERE ###
-        # ssh_admin.remove_permitted_address("0x2592175D63aeAfC7ADDE6014Fd1A881B16e17A9e")
-        # ssh_admin.add_permitted_address("0x2592175D63aeAfC7ADDE6014Fd1A881B16e17A9e")
-        self.remove_public_value()
+        try:
+            cmd = "ssh-add -d \"" + os.environ[
+                "USERPROFILE"] + "\\.ssh\\DKAP\\" + self.main_account + "\""  ### replace SELF and WALLETADDRESS with wallet address, unique identifier for self
+            subprocess.run(cmd, shell=True, check=True)  # del privkey from ssh-agent
+            os.remove(os.environ["USERPROFILE"] + "\\.ssh\\DKAP\\" + self.main_account)
+            os.remove(os.environ["USERPROFILE"] + "\\.ssh\\DKAP\\" + self.main_account + ".pub")
+            ### FUNCTION TO DELETE SELF.PUBKEY FROM BLOCKCHAIN HERE ###
+            self.remove_public_value()
+            print('Done deleting')
+        except:
+            print('Failed to delete key pair')

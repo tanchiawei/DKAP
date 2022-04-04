@@ -35,12 +35,10 @@ class ssh_admin:
             self.signed = self.web3.eth.account.signTransaction(self.tx, self.private_key)
 
             self.tx_hash = self.web3.eth.sendRawTransaction(self.signed.rawTransaction)
-
             self.web3.eth.wait_for_transaction_receipt(self.tx_hash)
-            print(self.tx_hash)
-            print('updated noob')
+            print('Successfully permitted address')
         except:
-            print('Fail noob')
+            print('Issued occurred during transacting to block chain.')
 
     def remove_permitted_address(self, in_permitted):
         if len(in_permitted) < 42:
@@ -61,7 +59,6 @@ class ssh_admin:
             self.tx_hash = self.web3.eth.sendRawTransaction(self.signed.rawTransaction)
 
             self.web3.eth.wait_for_transaction_receipt(self.tx_hash)
-            print(self.tx_hash)
-            print('updated noob')
+            print('Successfully removed address')
         except:
-            print('Failed')
+            print('Issued occurred during transacting to block chain.')
