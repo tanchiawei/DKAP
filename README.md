@@ -12,28 +12,28 @@ There must also be one or more appointed wardens to take executive action if war
 
 
 # Pre-requisite 
-python => 3.8 
-pip
-Metamask wallet ( Wallet Address , Private Key of Wallet)
-SSH agent
-SSH key-gen
-Windows
+python => 3.8 <br/>
+pip <br/>
+Metamask wallet ( Wallet Address , Private Key of Wallet) <br/>
+SSH agent <br/>
+SSH key-gen <br/>
+Windows <br/>
 
 # Node
-Start Windows Powershell x86 as admin
-Set-Service ssh-agent -StartupType Manual
-Download project source code from github
-pip install -r requirements.txt
-python main_node.py
+Start Windows Powershell x86 as admin <br/>
+Set-Service ssh-agent -StartupType Manual <br/>
+Download project source code from github <br/>
+pip install -r requirements.txt <br/>
+python main_node.py <br/>
 
 # Peer
-Download project source code from github
-pip install -r requirements.txt
-python main_peer.py
+Download project source code from github <br/>
+pip install -r requirements.txt <br/>
+python main_peer.py <br/>
 
 # Admin
-Start Windows Powershell x86 as admin
-Set-Service ssh-agent -StartupType Manual
-Download project source code from github
-pip install -r requirements.txt
-python main_admin.py
+Start Windows Powershell x86 as admin <br/>
+Set-Service ssh-agent -StartupType Manual <br/>
+Download project source code from github <br/>
+pip install -r requirements.txt <br/>
+python main_admin.py <br/>
