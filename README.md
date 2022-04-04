@@ -9,3 +9,31 @@ The KMS must periodically compare its blockchain with that of its peers to obtai
 The KMS on all participating devices must be able to continue to function if any single device fails. 
 
 There must also be one or more appointed wardens to take executive action if warranted (e.g., a new device is added and must be listed as a peer, or a device is stolen, and all the keys assigned to that device must be purged from the canonical blockchain). 
+
+
+# Pre-requisite 
+python => 3.8 
+pip
+Metamask wallet ( Wallet Address , Private Key of Wallet)
+SSH agent
+SSH key-gen
+Windows
+
+# Node
+Start Windows Powershell x86 as admin
+Set-Service ssh-agent -StartupType Manual
+Download project source code from github
+pip install -r requirements.txt
+python main_node.py
+
+# Peer
+Download project source code from github
+pip install -r requirements.txt
+python main_peer.py
+
+# Admin
+Start Windows Powershell x86 as admin
+Set-Service ssh-agent -StartupType Manual
+Download project source code from github
+pip install -r requirements.txt
+python main_admin.py
