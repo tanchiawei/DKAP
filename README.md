@@ -41,7 +41,7 @@ Admin / Node text file to change accordingly to your wallet address and private 
 # Deploy Smart Contract
 Proceed to [Remix] on any browser. <br/>
 Load the solidity code contract.sol onto [Remix] IDE <br/>
-[Remix] : https://remix.ethereum.org/#optimize=false&runs=200&evmVersion=null&version=soljson-v0.8.7+commit.e28d00a7.js
+
 Compile the code with 0.87+commit <br/>
 ![image](https://user-images.githubusercontent.com/72211145/161832689-a32523e1-f004-4196-b487-6f6b7c879a39.png) <br/>
 <br/>
@@ -50,7 +50,7 @@ Deploy
 ![image](https://user-images.githubusercontent.com/72211145/161832915-7d95b5e4-f012-471d-ae14-0f11793344a7.png)
 
 
-
+[Remix]: https://remix.ethereum.org/#optimize=false&runs=200&evmVersion=null&version=soljson-v0.8.7+commit.e28d00a7.js
 
 
 # Node
