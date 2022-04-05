@@ -12,17 +12,48 @@ There must also be one or more appointed wardens to take executive action if war
 
 # Pre-requisite
 
-python => 3.8 <br/>
-pip <br/>
+Python => 3.8 <br/>
+Pip <br/>
 Metamask wallet ( Wallet Address , Private Key of Wallet) <br/>
 SSH agent <br/>
 SSH key-gen <br/>
 Windows <br/>
 
+# Installation and Usage of MetaMask wallet
+Click [here] to download. <br/>
+Create / Login your MetaMask Wallet. <br/>
+Create at least 2 wallet address. <br/>
+Request for testnet ethereum at this [website]. <br/>
+
+[here]: https://metamask.io/download/
+[website]: https://rinkebyfaucet.com/
+
+# SSH Agent for Node Machine
+Enable SSH Agent if disabled using the following command in PowerShell terminal as Administrator. <br/>
+```Set-Service -Name ssh-agent -StartupType Manual``` <br/>
+Start SSH Agent service. <br/>
+```Start-Service ssh-agent``` <br/>
+
+# Wallet Configuration for Admin / Node machine
+Admin / Node text file to change accordingly to your wallet address and private key <br/>
+
+
+# Deploy Smart Contract
+Proceed to [Remix] on any browser. <br/>
+Load the solidity code onto Remix <br/>
+Compile the code with 0.87+commit <br/>
+![image](https://user-images.githubusercontent.com/72211145/161832689-a32523e1-f004-4196-b487-6f6b7c879a39.png) <br/>
+<br/>
+Change the environment to Injected Web3 with selected wallet
+Deploy
+![image](https://user-images.githubusercontent.com/72211145/161832915-7d95b5e4-f012-471d-ae14-0f11793344a7.png)
+
+
+
+[Remix] : 
+
 # Node
 
-Start Windows Powershell x86 as admin <br/>
-Set-Service ssh-agent -StartupType Manual <br/>
 Download project source code from github <br/>
 pip install -r requirements.txt <br/>
 python main_node.py <br/>
