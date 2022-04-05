@@ -12,12 +12,23 @@ There must also be one or more appointed wardens to take executive action if war
 
 # Pre-requisite
 
-python => 3.8 <br/>
-pip <br/>
+Python => 3.8 <br/>
+Pip <br/>
 Metamask wallet ( Wallet Address , Private Key of Wallet) <br/>
 SSH agent <br/>
 SSH key-gen <br/>
 Windows <br/>
+
+# Installation and Usage of MetaMask wallet
+Click [here] to download.
+Create / Login your MetaMask Wallet
+Create at least 2 wallet address
+Request for testnet ethereum at this [website]
+
+
+
+[here]: https://metamask.io/download/
+[website]: https://rinkebyfaucet.com/
 
 # Node
 
