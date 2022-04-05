@@ -40,7 +40,7 @@ Admin / Node text file to change accordingly to your wallet address and private 
 
 # Deploy Smart Contract
 Proceed to [Remix] on any browser. <br/>
-Load the solidity code onto Remix <br/>
+Load the solidity code contract.sol onto [Remix] IDE <br/>
 Compile the code with 0.87+commit <br/>
 ![image](https://user-images.githubusercontent.com/72211145/161832689-a32523e1-f004-4196-b487-6f6b7c879a39.png) <br/>
 <br/>
