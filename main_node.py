@@ -20,10 +20,6 @@ def main():
 
     initCheck()  # check that folders and files required are present
 
-    #listenthread = threading.Thread(target=ssh_peer.listen,
-                                    #daemon=True)  # args= for arguments to pass, daemon= to kill thread when main ends
-    #listenthread.start()  # while kms is running, listen for blockchain changes
-
     while True:
         print("> ", end="")
         input = session.prompt()
