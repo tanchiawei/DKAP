@@ -58,13 +58,13 @@ def main():
 if __name__ == "__main__":
     file_exists = os.path.isfile(".\\admin.txt")
     if file_exists:
-        node_file = open('admin.txt', 'r')
-        node_lines = node_file.readlines()
-        if len(node_lines) < 2:
+        admin_file = open('admin.txt', 'r')
+        admin_lines = admin_file.readlines()
+        if len(admin_lines) < 2:
             print("You are not authorized admin")
         else:
-            main_account = node_lines[0].strip()
-            private_key = node_lines[1].strip()
+            main_account = admin_lines[0].strip()
+            private_key = admin_lines[1].strip()
             #ssh_peer = ssh_peer()
             ssh_node = ssh_node(main_account,private_key)
             ssh_admin = ssh_admin(main_account,private_key)
