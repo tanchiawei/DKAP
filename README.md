@@ -1,4 +1,4 @@
-# DKAP
+# Inimical DKAP
 
 The blockchain-based KMS must be installed on each participating device and uniquely identified by an address (similar to the identifier for a Bitcoin wallet). Every peer on this Rinkeby Testnet must be pre-approved by a steward. It must be capable of generating SSH key pairs for devices and storing the public key on the blockchain as a transaction. When a user attempts to SSH to this device, the KMS must refer to the blockchain for the user’s public key and device; if the key is accurate, up to date and from the correct originating device (as identified by address), the connection is established.
 
