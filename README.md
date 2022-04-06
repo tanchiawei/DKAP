@@ -41,10 +41,13 @@ Admin / Node text file to change accordingly to your wallet address and private 
 # Deploy Smart Contract
 Proceed to [Remix] on any browser. <br/>
 Load the solidity code contract.sol onto [Remix] IDE <br/>
+Make necessary changes to wallet address of the administrator machine
+![image](https://user-images.githubusercontent.com/72211145/161918052-7f415acf-65b0-4b58-947f-2c2d27eb55b9.png)
+<br/>
+![image](https://user-images.githubusercontent.com/72211145/161918526-61897e9f-68fb-4845-b842-0ced1374646c.png)
 
 Compile the code with 0.87+commit <br/>
 ![image](https://user-images.githubusercontent.com/72211145/161832689-a32523e1-f004-4196-b487-6f6b7c879a39.png) <br/>
-<br/>
 Change the environment to Injected Web3 with selected wallet
 Deploy
 ![image](https://user-images.githubusercontent.com/72211145/161832915-7d95b5e4-f012-471d-ae14-0f11793344a7.png)
