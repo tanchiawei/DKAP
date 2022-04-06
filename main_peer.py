@@ -28,7 +28,7 @@ def main():
         input = session.prompt()
         print(input[:-1])
         if input == "help":
-            print("Help dialogue.")
+            print("HELP - COMMANDS AVAILABLE FOR DKAP PEER:")
             print("list - List keys. Own private key and other installed public keys here. Refer to register.txt")
         elif input == "exit":
             sys.exit(0)

@@ -25,7 +25,7 @@ def main():
         input = session.prompt()
         print(input[:-1])
         if input == "help":
-            print("Help dialogue.")
+            print("HELP - COMMANDS AVAILABLE FOR DKAP NODE:")
             print("gen - Generating keypair for this machine. Save private key (ssh-add), commit public key to blockchain.")
             print("del - Delete keypair for this machine. Delete private key (ssh-add -d), commit public key deletion to blockchain.")
         elif input == "exit":
