@@ -36,6 +36,10 @@ Start SSH Agent service. <br/>
 
 # Wallet Configuration for Admin / Node machine
 Admin / Node text file to change accordingly to your wallet address and private key <br/>
+![image](https://user-images.githubusercontent.com/72211145/161926003-af096d70-2390-424c-9182-62e14b7aee17.png)
+
+![image](https://user-images.githubusercontent.com/72211145/161926064-0149af4f-f3b6-441a-8ee1-1ca7e177c332.png)
+
 
 
 # Deploy Smart Contract
@@ -52,6 +56,10 @@ Change the environment to Injected Web3 with selected wallet
 Deploy
 ![image](https://user-images.githubusercontent.com/72211145/161832915-7d95b5e4-f012-471d-ae14-0f11793344a7.png)
 
+Modify with new deployed contract address
+![image](https://user-images.githubusercontent.com/72211145/161925821-725e52a1-2d00-414d-a40d-8c2f8b8d8c73.png)
+
+
 
 [Remix]: https://remix.ethereum.org/#optimize=false&runs=200&evmVersion=null&version=soljson-v0.8.7+commit.e28d00a7.js
 
@@ -62,11 +70,17 @@ Download project source code from github <br/>
 pip install -r requirements.txt <br/>
 python main_node.py <br/>
 
+![image](https://user-images.githubusercontent.com/72211145/161927123-991c1f12-4ab0-4536-9f74-299ff6468e9b.png)
+
+
 # Peer
 
 Download project source code from github <br/>
 pip install -r requirements.txt <br/>
 python main_peer.py <br/>
+
+![image](https://user-images.githubusercontent.com/72211145/161927045-814770e0-eba9-41df-a3dc-b57d0859c3eb.png)
+
 
 # Admin
 
@@ -75,3 +89,6 @@ Set-Service ssh-agent -StartupType Manual <br/>
 Download project source code from github <br/>
 pip install -r requirements.txt <br/>
 python main_admin.py <br/>
+
+![image](https://user-images.githubusercontent.com/72211145/161927177-6e1cd112-4d54-4c2c-b556-43d64590ae4d.png)
+
