@@ -84,8 +84,6 @@ python main_peer.py <br/>
 
 # Admin
 
-Start Windows Powershell x86 as admin <br/>
-Set-Service ssh-agent -StartupType Manual <br/>
 Download project source code from github <br/>
 pip install -r requirements.txt <br/>
 python main_admin.py <br/>
